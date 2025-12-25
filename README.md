@@ -1,33 +1,69 @@
-# Causal Model 🔬
+# Causal Inference: Loyalty Program Impact Analysis
 
-**Causal inference with DoWhy — estimating treatment effects from observational data.**
+Estimating the causal effect of a loyalty program on customer spending using DoWhy and propensity score matching.
 
-A worked example demonstrating causal effect estimation using Microsoft's [DoWhy](https://github.com/py-why/dowhy) library, with simulated customer spend data.
+## Overview
 
-## What's Inside
+This project demonstrates a causal inference workflow to answer the question: **Does enrolling in a loyalty program cause customers to spend more?**
 
-Simulates a loyalty program signup scenario with 10,000 users over 12 months:
+Using simulated observational data, we construct a causal graph (DAG), apply propensity score matching to control for confounders, and estimate the Average Treatment Effect (ATE) of program enrollment on monthly spend.
 
-- **Causal Graph Definition** — DAG specifying the assumed causal structure (treatment → outcome, with confounders)
-- **Effect Identification** — Automated identification of estimands from the causal graph
-- **Effect Estimation** — Propensity score matching (IV method) to estimate the Average Treatment Effect on the Treated (ATT)
+![Causal DAG](causal_model.png)
 
-## Key Concepts Demonstrated
+## Methodology
 
-- Defining causal graphs as DOT diagrams
-- Pre/post treatment spend comparison
-- Handling confounders (signup month, pre-treatment spending)
-- DoWhy's identify → estimate → (refute) workflow
+### Causal Framework
 
-## Tech Stack
+1. **Causal Graph (DAG)** — Define the assumed data-generating process: signup timing and other covariates influence both treatment assignment (loyalty program enrollment) and the outcome (spend).
 
-- **Causal Inference:** DoWhy
-- **Data:** pandas, NumPy
-- **Visualization:** DAG rendering via graphviz
+2. **Identification** — Use the DAG to identify valid adjustment sets via the backdoor criterion.
 
-## Quick Start
+3. **Estimation** — Apply **propensity score matching** to create comparable treated and control groups, then estimate the ATE.
+
+4. **Refutation** — Run robustness checks (placebo treatment, random common cause, data subset) to validate the estimate.
+
+### Tools
+
+- [**DoWhy**](https://github.com/py-why/dowhy) — End-to-end causal inference library that handles identification, estimation, and refutation.
+
+## Data
+
+The dataset is **simulated** within the notebook and contains:
+
+| Column | Description |
+|---|---|
+| `user_id` | Unique customer identifier |
+| `signup_month` | Month the customer signed up |
+| `month` | Observation month |
+| `spend` | Monthly spending amount |
+| `treatment` | Whether the customer enrolled in the loyalty program (0/1) |
+
+## Getting Started
+
+### Install Dependencies
 
 ```bash
-pip install dowhy pandas numpy
-jupyter notebook causal_model/Untitled.ipynb
+pip install -r requirements.txt
 ```
+
+### Run
+
+Open and execute the notebook:
+
+```bash
+jupyter notebook causal_inference_loyalty_program.ipynb
+```
+
+## Project Structure
+
+```
+├── causal_inference_loyalty_program.ipynb   # Full analysis notebook
+├── causal_model.png                         # Causal DAG visualization
+├── requirements.txt
+├── LICENSE
+└── README.md
+```
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
