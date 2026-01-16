@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "causal-model"
+version = "1.0.0"
+description = "Causal inference analysis for loyalty program impact using DoWhy"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "dowhy>=0.9",
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "scikit-learn",
+    "networkx",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "jupyter"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

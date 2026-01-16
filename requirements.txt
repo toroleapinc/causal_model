@@ -3,5 +3,7 @@ numpy
 pandas
 matplotlib
 scikit-learn
-jupyter
 networkx
+pyyaml
+jupyter
+pytest>=7.0

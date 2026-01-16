@@ -1,0 +1,22 @@
+simulation:
+  num_users: 10000
+  num_months: 12
+  base_spend_lambda: 500
+  month_decay_rate: 10
+  treatment_effect: 100
+  signup_month: 3          # month used for single-cohort analysis
+
+model:
+  treatment: treatment
+  outcome: post_spends
+  estimation_method: iv.propensity_score_matching
+  target_units: att
+
+refutation:
+  placebo_treatment:
+    enabled: true
+  random_common_cause:
+    enabled: true
+  data_subset:
+    enabled: true
+    subset_fraction: 0.9
